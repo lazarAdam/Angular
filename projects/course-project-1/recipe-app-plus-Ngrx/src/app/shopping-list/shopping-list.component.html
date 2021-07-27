@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-xs-10">
+    <app-shopping-edit></app-shopping-edit>
+    <hr>
+    <ul class="list-group">
+      <!--
+      // note: since we are using ngrx  ingredients is  an observable now a we must use the async pipe
+      (ingredients | async) notation which will resolve into the array stored in ingredients
+       check the shopping-list-component for details
+      -->
+      <a
+        class="list-group-item"
+        style="cursor: pointer"
+        *ngFor="let ingr of (ingredients | async).ingredients; let i = index"
+        (click)="onEditItem(i)"
+      >
+        {{ingr.name}} ({{ingr.amount}})
+      </a>
+    </ul>
+  </div>
+</div>

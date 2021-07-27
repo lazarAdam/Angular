@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <!--[formGroup]="signupForm tells Angular to select our reactive form created in the reactive-forms.ts -->
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+        <!-- nested form group which uses the formGroupName directive-->
+        <div formGroupName='userData'>
+          <div class="form-group">
+            <label for="username">Username</label>
+
+            <!--  formControlName = 'username' is a directive that tells Angular the control name we want to attach this input to-->
+            <input
+              type="text"
+              id="username"
+              formControlName='username'
+              class="form-control"
+            >
+            <span
+              class="help-block"
+              *ngIf="!signupForm.get('userData.username').valid && signupForm.get('userData.username').touched"
+            >
+                <!-- accessing errors['nameIsForbidden'] for the input and display error message based on the
+                 name of the error in the errors array of the input -->
+               <span *ngIf="signupForm.get('userData.username').errors['nameIsForbidden']">
+                this name is invalid
+               </span>
+              <span *ngIf="signupForm.get('userData.username').errors['required']">
+                this filed is rquired
+               </span>
+
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="email">email</label>
+            <input
+              type="text"
+              id="email"
+              formControlName='email'
+              class="form-control">
+            <span
+              class="help-block"
+              *ngIf="!signupForm.get('userData.email').valid && signupForm.get('userData.email').touched"
+
+            > Please enter a vaild email</span>
+          </div>
+        </div>
+        <div class="radio" *ngFor="let gender of genders">
+          <label>
+            <input
+              type="radio"
+              formControlName='gender'
+              [value]="gender">{{ gender }}
+          </label>
+        </div>
+        <div formArrayName="hobbies">
+          <h4>Your hobbies</h4>
+          <button class="btn btn-default" type="button" (click)="onAddHobbies()">Add Hobby</button>
+          <div
+            class="form-group"
+            *ngFor="let hobbyControl of getControls(); let i = index"
+          >
+            <!--[formControlName]="i" is used because we are accessing the array of controls created
+              in .ts file which we loop through in the above code and we use i as index to access each control
+               in the array of controls-->
+            <input type="text" class="form-control" [formControlName]="i">
+          </div>
+        </div>
+        <span
+          class="help-block"
+          *ngIf="!signupForm.valid && signupForm.touched"
+
+        > Please enter a valid Data</span>
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>

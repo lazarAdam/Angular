@@ -1,0 +1,49 @@
+<!--ng-template referencing  appPlaceholder directive-->
+<ng-template appPlaceholder></ng-template>
+
+<div class="row">
+  <div class="col-xs-12 col-md-6 col-md-offset-3">
+<!--    <div class="alert alert-danger" *ngIf="error">-->
+<!--      <p>{{error}}</p>-->
+<!--    </div>-->
+<!--    <app-alert [message]="error" *ngIf="error" (close)="onHandleError()"> </app-alert>-->
+
+    <div class="text-center" *ngIf="isLoading">
+      <app-loading-spinner></app-loading-spinner>
+    </div>
+    <form #formRef='ngForm' (ngSubmit)="onSubmit(formRef)" *ngIf="!isLoading">
+      <div class="form-group">
+        <label for="email">email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          ngModel
+          name="email"
+          required email
+        >
+      </div>
+      <div class="form-group">
+        <label for="pass">Password</label>
+        <input type="password" class="form-control" id="pass" ngModel name="pass" required minlength="6">
+      </div>
+      <div>
+        <button
+          class="btn btn-primary"
+          type="submit"
+          [disabled]="!formRef.valid "
+        >
+          {{isLoginMode ? 'authSuccess' : 'Sing Up'}}
+        </button>
+        |
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="onSwitchMode()">
+
+          Switch To {{isLoginMode ? 'Sign Up' : 'authSuccess'}}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
